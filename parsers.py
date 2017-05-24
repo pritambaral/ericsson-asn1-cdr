@@ -1,4 +1,4 @@
-
+from compat import ord
 import datetime, struct
 
 def Date(self, value):
@@ -50,8 +50,8 @@ class _TBCDDecoder(object):
 
 class _Attributed(dict):
   def __repr__(self):
-    return "%s(%s)" % (self.__class__.__name__, ", ".join([ "%s=%s" % (k, repr(v)) for k, v in self.items() ]))
-   
+    return "%s(%s)" % (self.__class__.__name__, ", ".join([ "%s=%s" % (k, repr(v)) for k, v in list(self.items()) ]))
+
 
 class _AddressString(object):
   def __init__(self, value):
@@ -81,7 +81,7 @@ IMEI = TBCDStringD(7)
 
 class TAC(_Attributed):
   def __init__(self, value):
-    self["TSC"], self["TOS"], self["TOI"] = map(ord, value[0:3])
+    self["TSC"], self["TOS"], self["TOI"] = list(map(ord, value[0:3]))
     if len(value) == 4:
       self["TOP"] = ord(value[3])
 
@@ -169,9 +169,9 @@ class InternalCauseAndLoc(_Attributed):
 def _uint(self, value):
   l = len(value)
   if l <= 4:
-    return struct.unpack("!I", ("\x00" * (4-l)) + value)[0]
+    return struct.unpack_from("!I", (b"\x00" * (4-l)) + value)[0]
   elif l <= 8:
-    return struct.unpack("!Q", ("\x00" * (8-l)) + value)[0]
+    return struct.unpack_from("!Q", (b"\x00" * (8-l)) + value)[0]
 
 CallIDNumber = \
 RecordSequenceNumber = \

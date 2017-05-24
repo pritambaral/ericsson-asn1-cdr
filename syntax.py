@@ -84,7 +84,7 @@ ConstraintMap = {
 
 def ConstraintHelper(c):
   result = []
-  for key, value in c.items():
+  for key, value in list(c.items()):
     r = ConstraintMap[key](value)
     if r:
       result.append(r)
@@ -138,7 +138,7 @@ def GenerateNamedTypesList(definitions, element, level=1):
       typename = "univ.Null"
     elif val["defType"] == "SequenceOf":
       typename = "univ.SequenceOf"
-      print val.items()
+      print(list(val.items()))
       cbody = [ "  componentType=%s()" % val["typedef"]["definitionType"] ]
     elif val["defType"] == "Choice":
       typename = "univ.Choice"
@@ -171,7 +171,7 @@ defmap = {
 
 def GenerateClassDefinition(definition, name, ancestor, element, level=1):
   result = []
-  for defkey, defval in definition.items():
+  for defkey, defval in list(definition.items()):
     if defval:
       fn = defmap.get(defkey)
       if fn:
@@ -229,28 +229,28 @@ for element in pf:
   TypeDefs[element["name"]] = StaticConstructor(element)
 
 while TypeDefs:
-  ready = [ k for k, v in TypeDeps.items() if len(v) == 0 ]
+  ready = [ k for k, v in list(TypeDeps.items()) if len(v) == 0 ]
   if not ready:
     x = list()
-    for a in TypeDeps.values():
+    for a in list(TypeDeps.values()):
       x.extend(a)
-    x = frozenset(x) - frozenset(TypeDeps.keys())
+    x = frozenset(x) - frozenset(list(TypeDeps.keys()))
 
-    print TypeDefs
+    print(TypeDefs)
 
-    raise ValueError, sorted(x)
+    raise ValueError(sorted(x))
 
   for t in ready:
-    for v in TypeDeps.values():
+    for v in list(TypeDeps.values()):
       try:
         v.remove(t)
       except ValueError:
         pass
 
     del TypeDeps[t]
-    print TypeDefs[t]
-    print
-    print
+    print(TypeDefs[t])
+    print()
+    print()
 
     del TypeDefs[t]
   

@@ -1,4 +1,5 @@
 import sys
+from compat import ord
 
 import pyasn1.codec.ber.decoder
 import parserimp
@@ -25,7 +26,7 @@ class CDRFileParser(object):
         yield entry
 
   def ParseBlock(self, block):
-    while block and block[0] != '\x00':
+    while block and ord(block[0]) != 0:
       result, block = pyasn1.codec.ber.decoder.decode(block, asn1Spec=parserimp.defs.CallDataRecord())
       yield result
 
@@ -35,19 +36,19 @@ class CDRFileParser(object):
 #  if r.getComponentByName('mSOriginating'):
 #    c = short_pb2.CDR()
 #    c.type = c.ORIG_CALL
-#    
+#
 #    print r.getComponentByName('mSOriginating').prettyPrint()
 
 p = CDRFileParser(sys.argv[1])
 
 for r in p.parse():
-  print r.prettyPrint()
+  print(r.prettyPrint())
 
 #  if r.getComponentByName('uMTSGSMPLMNCallDataRecord'):
 #    r.prettyPrint()
 #  elif r.getComponentByName('compositeCallDataRecord'):
 #    for x in r.getComponentByName('compositeCallDataRecord'):
 #      ParseSingleRecord(x)
-    
-print "Blocks:", p.blocks, "Records:", p.entries
+
+print("Blocks:", p.blocks, "Records:", p.entries)
 
