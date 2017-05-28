@@ -59,6 +59,15 @@ INMarkingOfMS ::= ENUMERATED
 
 InternalCauseAndLoc ::= OCTET STRING (SIZE(2))
 
+IuCodec ::= ENUMERATED
+(uMTSAdaptiveMultiRate-Set7                         (1),
+uMTSAdaptiveMultiRate-AllModes                      (2),
+uMTSAdaptiveMultiRate2-Set7                         (3),
+uMTSAdaptiveMultiRate2-Set1                         (4),
+uMTSAdaptiveMultiRate2-AllModes                     (5),
+uMTSAdaptiveMultiRateWideBand-Set0                  (20))
+
+
 MiscellaneousInformation ::= OCTET STRING (SIZE(1))
 MobileUserClass1 ::= OCTET STRING (SIZE(1))
 MobileUserClass2 ::= OCTET STRING (SIZE(1))
@@ -1539,6 +1548,8 @@ MSOriginating ::= SET(
                                               OPTIONAL,
     rTCNotInvokedReason        (150) IMPLICIT RTCNotInvokedReason
                                               OPTIONAL,
+    iuCodec                    (153) IMPLICIT IuCodec
+                                              OPTIONAL,
 
 --F-- originatedCode            (66) IMPLICIT OriginatedCode
                                               OPTIONAL,
@@ -1844,6 +1855,9 @@ MSTerminating ::= SET(
     calledSubscriberIMEISV     (116) IMPLICIT IMEISV OPTIONAL,
     globalCallReference        (117) IMPLICIT GlobalCallReference
                                               OPTIONAL,
+    iuCodec                    (118) IMPLICIT IuCodec
+                                              OPTIONAL,
+
 
 --F-- reroutingIndicator       (121) IMPLICIT NULL OPTIONAL,
 --F-- invocationOfCallHold     (122) IMPLICIT NULL OPTIONAL,

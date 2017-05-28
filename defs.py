@@ -208,6 +208,15 @@ class EMLPPPriorityLevel(univ.OctetString):
   subtypeSpec = univ.OctetString.subtypeSpec + constraint.ValueSizeConstraint(1, 1)
 
 
+class IuCodec(univ.Enumerated):
+  namedValues = namedval.NamedValues(
+    ('uMTSAdaptiveMultiRate-Set7', 1),
+    ('uMTSAdaptiveMultiRate-AllModes', 2),
+    ('uMTSAdaptiveMultiRate2-Set7', 3),
+    ('uMTSAdaptiveMultiRate2-Set1', 4),
+    ('uMTSAdaptiveMultiRate2-AllModes', 5),
+    ('uMTSAdaptiveMultiRateWideBand-Set0', 20),
+  )
 class ChargingOrigin(univ.OctetString):
   subtypeSpec = univ.OctetString.subtypeSpec + constraint.ValueSizeConstraint(1, 1)
 
@@ -1330,6 +1339,7 @@ class MSTerminating(univ.Set):
     namedtype.OptionalNamedType('userClass', UserClass().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 115))),
     namedtype.OptionalNamedType('calledSubscriberIMEISV', IMEISV().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 116))),
     namedtype.OptionalNamedType('globalCallReference', GlobalCallReference().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 117))),
+    namedtype.OptionalNamedType('iuCodec', IuCodec().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 118))),
     namedtype.OptionalNamedType('reroutingIndicator', univ.Null().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 121))),
     namedtype.OptionalNamedType('invocationOfCallHold', univ.Null().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 122))),
     namedtype.OptionalNamedType('retrievalOfHeldCall', univ.Null().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 123))),
@@ -1901,6 +1911,7 @@ class MSOriginating(univ.Set):
     namedtype.OptionalNamedType('rTCDefaultServiceHandling', RTCDefaultServiceHandling().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 148))),
     namedtype.OptionalNamedType('rTCFailureIndicator', RTCFailureIndicator().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 149))),
     namedtype.OptionalNamedType('rTCNotInvokedReason', RTCNotInvokedReason().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 150))),
+    namedtype.OptionalNamedType('iuCodec', IuCodec().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 153))),
     namedtype.OptionalNamedType('originatedCode', OriginatedCode().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 66))),
     namedtype.OptionalNamedType('reroutingIndicator', univ.Null().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 121))),
     namedtype.OptionalNamedType('invocationOfCallHold', univ.Null().subtype(implicitTag=tag.Tag(tag.tagClassContext, tag.tagFormatConstructed, 122))),
